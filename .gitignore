@@ -3,3 +3,7 @@ _body_nostyle.html
 _logo.png
 _template.html
 AnxietyZ Landing (standalone).html
+node_modules
+dist
+*.local
+.DS_Store
