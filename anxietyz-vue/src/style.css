@@ -1,0 +1,171 @@
+@import "tailwindcss";
+
+/* ===================== FONTES SELF-HOSTED ===================== */
+@font-face {
+  font-family: 'Rajdhani'; font-style: normal; font-weight: 500; font-display: swap;
+  src: url('./assets/fonts/rajdhani-500.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Rajdhani'; font-style: normal; font-weight: 600; font-display: swap;
+  src: url('./assets/fonts/rajdhani-600.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Rajdhani'; font-style: normal; font-weight: 700; font-display: swap;
+  src: url('./assets/fonts/rajdhani-700.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Chakra Petch'; font-style: normal; font-weight: 600; font-display: swap;
+  src: url('./assets/fonts/chakra-petch-600.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Chakra Petch'; font-style: normal; font-weight: 700; font-display: swap;
+  src: url('./assets/fonts/chakra-petch-700.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Poppins'; font-style: normal; font-weight: 300; font-display: swap;
+  src: url('./assets/fonts/poppins-300.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Poppins'; font-style: normal; font-weight: 400; font-display: swap;
+  src: url('./assets/fonts/poppins-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Poppins'; font-style: normal; font-weight: 500; font-display: swap;
+  src: url('./assets/fonts/poppins-500.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Poppins'; font-style: normal; font-weight: 600; font-display: swap;
+  src: url('./assets/fonts/poppins-600.woff2') format('woff2');
+}
+
+/* ===================== TEMA (Tailwind v4) ===================== */
+@theme {
+  --color-ink: #0A0A0A;
+  --color-purple: #9333EA;
+  --color-purple-deep: #7C3AED;
+  --color-purple-soft: #c9a9ff;
+  --color-muted: #B0B0B0;
+
+  --font-display: 'Rajdhani', sans-serif;
+  --font-tech: 'Chakra Petch', sans-serif;
+  --font-body: 'Poppins', sans-serif;
+}
+
+/* ===================== BASE ===================== */
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--color-ink);
+  color: #fff;
+  font-family: var(--font-body);
+  overflow-x: hidden;
+}
+
+/* Corte chanfrado estilo HUD gamer, reutilizável */
+.clip-chamfer { clip-path: polygon(0 0, calc(100% - 13px) 0, 100% 13px, 100% 100%, 13px 100%, 0 calc(100% - 13px)); }
+.clip-chamfer-sm { clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px)); }
+.clip-chamfer-lg { clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 22px 100%, 0 calc(100% - 22px)); }
+
+
+/* Glow pulsante dos CTAs principais */
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 26px rgba(147,51,234,.5); }
+  50%      { box-shadow: 0 0 48px rgba(147,51,234,.9); }
+}
+.animate-pulse-glow { animation: pulseGlow 3.2s ease-in-out infinite; }
+
+/* Drop-shadow para botões com clip-path (box-shadow é cortado pelo clip-path) */
+@keyframes pulseGlowDrop {
+  0%, 100% { filter: drop-shadow(0 0 12px rgba(147,51,234,.65)); }
+  50%      { filter: drop-shadow(0 0 28px rgba(147,51,234,1)); }
+}
+.animate-pulse-glow-drop { animation: pulseGlowDrop 3.2s ease-in-out infinite; }
+.animate-pulse-glow-drop:hover {
+  animation: none;
+  filter: drop-shadow(0 0 22px rgba(147,51,234,1)) drop-shadow(0 6px 28px rgba(147,51,234,.7));
+  transition: filter 0.2s ease;
+}
+
+/* Botões com ripple + feedback tátil */
+.btn-anim { position: relative; overflow: hidden; }
+.btn-anim:active { transform: translateY(1px) scale(.98); }
+.btn-anim .ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255,255,255,.35);
+  transform: scale(0);
+  animation: rippleFx .6s ease-out;
+  pointer-events: none;
+}
+@keyframes rippleFx {
+  to { transform: scale(2.4); opacity: 0; }
+}
+
+/* Pain cards */
+.pain-card {
+  background: linear-gradient(150deg, rgba(20,14,30,.6), rgba(5,5,10,.8));
+  border: 1px solid rgba(255,255,255,.07);
+  transition: border-color 300ms, transform 300ms;
+}
+.pain-card:hover {
+  border-color: color-mix(in srgb, var(--accent) 35%, transparent);
+  transform: translateY(-4px);
+}
+
+/* ===================== SCROLL REVEAL ===================== */
+.rv {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.65s cubic-bezier(.22,1,.36,1), transform 0.65s cubic-bezier(.22,1,.36,1);
+}
+.rv.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.rv-stagger > * {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.6s cubic-bezier(.22,1,.36,1), transform 0.6s cubic-bezier(.22,1,.36,1);
+}
+.rv-stagger.revealed > *:nth-child(1)  { opacity: 1; transform: translateY(0); transition-delay: 0ms; }
+.rv-stagger.revealed > *:nth-child(2)  { opacity: 1; transform: translateY(0); transition-delay: 80ms; }
+.rv-stagger.revealed > *:nth-child(3)  { opacity: 1; transform: translateY(0); transition-delay: 160ms; }
+.rv-stagger.revealed > *:nth-child(4)  { opacity: 1; transform: translateY(0); transition-delay: 240ms; }
+.rv-stagger.revealed > *:nth-child(5)  { opacity: 1; transform: translateY(0); transition-delay: 320ms; }
+.rv-stagger.revealed > *:nth-child(6)  { opacity: 1; transform: translateY(0); transition-delay: 400ms; }
+.rv-stagger.revealed > *:nth-child(7)  { opacity: 1; transform: translateY(0); transition-delay: 480ms; }
+.rv-stagger.revealed > *:nth-child(n+8){ opacity: 1; transform: translateY(0); transition-delay: 480ms; }
+
+/* Carrossel infinito de jogos compatíveis */
+.games-viewport {
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+.games-track {
+  display: flex;
+  gap: 12px;
+  width: max-content;
+  animation: marquee 36s linear infinite;
+}
+.games-track-reverse {
+  animation-direction: reverse;
+  animation-duration: 40s;
+}
+.games-track:hover { animation-play-state: paused; }
+
+.game-card {
+  border: 1px solid rgba(147,51,234,.18);
+  background: linear-gradient(160deg, rgba(20,14,30,.7), rgba(5,5,10,.75));
+  transition: border-color 300ms, transform 300ms;
+}
+.game-card:hover {
+  border-color: rgba(147,51,234,.45);
+  transform: translateY(-3px);
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
